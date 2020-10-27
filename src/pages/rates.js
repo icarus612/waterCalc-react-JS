@@ -1,27 +1,31 @@
-import React from 'react';
-import '../application.css';
-import Residential from '../components/residentialRates.js';
-import Commercial from '../components/commercialRates.js';
+import React, { useState } from "react";
+import Button from './components/button.js';
 
-  
-const Rates = () => {
-	const [system, setSystem] = useState("R")
+import {
+	FirstCard,
+	CommercialRates,
+	ResidentialRates,
+} from "./sections/router.js";
+
+const Rates = (props) => {
+	const [position, setPosition] = useState("F");
+
+	const cards = {
+		"F": <FirstCard onChange={(e) => setPosition(e)} />,
+		"R": <ResidentialRates />,
+		"C": <CommercialRates />,
+	};
+
 	return (
-		<article id="contact">
-			<section className="py-5 h-100vh d-flex flex-wrap overflow-hidden color-change-bg">
-				<div className='container flex-wrap flex-row d-flex justify-content-center align-items-center'>
-					<div className="col-12">
-						<div className="card">
-							<h1 className="text-center m-4">
-								What Type of System do you have? 
-							</h1>
-							{system === "R" ? <Residential /> : <Commercial />}
-						</div>
-					</div>
+		<div className="container flex-wrap flex-row d-flex justify-content-center align-items-center vh-100">
+			<div className="col-12 col-md-8" >
+				<div className="card">
+					{ position !== "F" && <Button onClick={()=> setPosition("F")} value="back" className="back-btn" />}
+					{ cards[position] }
 				</div>
-			</section>
-		</article>
+			</div>
+		</div>
 	);
-}
+};
 
 export default Rates;
